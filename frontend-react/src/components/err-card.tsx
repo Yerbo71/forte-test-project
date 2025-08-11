@@ -1,0 +1,14 @@
+import React from 'react';
+
+interface ErrorCardProps {
+  message: string;
+}
+
+export const ErrorCard: React.FC<ErrorCardProps> = ({ message }) => {
+  return (
+    <div className="bg-red-50 border border-red-400 text-red-800 p-4 rounded-md">
+      <p className="font-semibold">Error</p>
+      <p>{message}</p>
+    </div>
+  );
+};

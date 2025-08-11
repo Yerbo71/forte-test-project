@@ -1,0 +1,25 @@
+export interface IContact {
+  id: number;
+  name: string;
+  phone: string;
+  email: string;
+}
+
+export interface IResponseData {
+  status: number;
+  message: string;
+}
+
+export interface IActionResponse extends IResponseData {
+  data: IContact;
+}
+
+export interface IContactIdParams {
+  id: number;
+}
+
+export interface IContactInputData {
+  name: string;
+  phone: string;
+  email?: string;
+}

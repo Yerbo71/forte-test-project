@@ -1,0 +1,2 @@
+export * from "./getAllContacts"
+export * from "./getContactsById"

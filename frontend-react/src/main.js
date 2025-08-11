@@ -1,0 +1,12 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import './index.css';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import App from './App.tsx';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { interceptorAxios } from '@/lib/interceptor.ts';
+import axios from 'axios';
+import { Toaster } from 'sonner';
+const queryClient = new QueryClient();
+interceptorAxios(axios);
+createRoot(document.getElementById('root')).render(_jsx(StrictMode, { children: _jsxs(QueryClientProvider, { client: queryClient, children: [_jsx(Toaster, { position: "top-right", theme: "system" }), _jsx(App, {})] }) }));

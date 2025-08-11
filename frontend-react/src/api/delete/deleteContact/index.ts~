@@ -1,0 +1,8 @@
+import axios from 'axios';
+import { CONTACTS_URL } from '@/api/url';
+import { IActionResponse } from '@/api/types';
+
+export const deleteContact = async ({ id }: IDeleteContactParams): Promise<IActionResponse> => {
+  const res = await axios.delete<IActionResponse>(`${CONTACTS_URL}/${id}`);
+  return res.data;
+};

@@ -1,0 +1,46 @@
+services:
+  db:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: forte_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./backend-express/src/config/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d forte_db"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  backend:
+    build: ./backend-express
+    restart: always
+    ports:
+      - "5001:5001"
+    environment:
+      - PORT=5001
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=forte_db
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./backend-express:/app
+      - /app/node_modules
+    command: >
+      sh -c "until nc -z db 5432;
+      do echo 'Waiting for Postgres...';
+      sleep 2;
+      done;
+      npm run dev"
+
+volumes:
+  db_data:

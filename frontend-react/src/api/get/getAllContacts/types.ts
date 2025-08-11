@@ -1,0 +1,22 @@
+import {IContact, IResponseData} from "@/api/types";
+
+export interface IGetAllContactsParams {
+    page?: number;
+    limit?: number;
+    search?: string;
+    name?: string;
+    email?: string;
+    phone?: string;
+}
+
+export interface IGetAllContactsData {
+    total: number;
+    totalPages: number;
+    currentPage: number;
+    pageSize: number;
+    data: IContact[];
+}
+
+export interface  IGetAllContactsResponse extends IResponseData {
+    data: IGetAllContactsData;
+}

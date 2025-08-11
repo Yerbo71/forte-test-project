@@ -1,0 +1,102 @@
+import React from 'react';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { IContactInputData } from '@/api/types';
+import { useNavigate } from 'react-router-dom';
+import { PhoneInput } from '@/components/phone-input.tsx';
+
+interface ContactsFormProps {
+  initialValues?: IContactInputData;
+  onSubmit: (values: IContactInputData) => void;
+  isSubmitting?: boolean;
+}
+
+const validationSchema = Yup.object({
+  name: Yup.string().min(2, 'Name must be at least 2 characters').required('Name is required'),
+  phone: Yup.string()
+    .matches(/^\+?[0-9\s\-()]{7,}$/, 'Phone number is not valid')
+    .required('Phone is required'),
+  email: Yup.string().email('Invalid email address')
+});
+
+export const ContactsForm: React.FC<ContactsFormProps> = ({
+  initialValues = { name: '', phone: '', email: '' },
+  onSubmit,
+  isSubmitting = false
+}) => {
+  const navigate = useNavigate();
+  const formik = useFormik<IContactInputData>({
+    initialValues,
+    validationSchema,
+    onSubmit,
+    enableReinitialize: true
+  });
+
+  return (
+    <form onSubmit={formik.handleSubmit} className="space-y-2">
+      <div>
+        <Label htmlFor="name" className="text-sm font-medium mb-2">
+          Name
+        </Label>
+        <Input
+          id="name"
+          name="name"
+          type="text"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.name}
+          placeholder="Enter full name"
+        />
+        {formik.touched.name && formik.errors.name && (
+          <p className="text-red-600 text-sm mt-1 text-start">{formik.errors.name}</p>
+        )}
+      </div>
+
+      <div>
+        <Label htmlFor="phone" className="text-sm font-medium mb-2">
+          Phone
+        </Label>
+        <PhoneInput
+          id="phone"
+          name="phone"
+          onChange={(value) => formik.setFieldValue('phone', value)}
+          international={true}
+          value={formik.values.phone}
+          placeholder="+1 234 567 8900"
+        />
+        {formik.touched.phone && formik.errors.phone && (
+          <p className="text-red-600 text-sm mt-1 text-start">{formik.errors.phone}</p>
+        )}
+      </div>
+
+      <div>
+        <Label htmlFor="email" className="text-sm font-medium mb-2">
+          Email
+        </Label>
+        <Input
+          id="email"
+          name="email"
+          type="email"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.email}
+          placeholder="email@example.com"
+        />
+        {formik.touched.email && formik.errors.email && (
+          <p className="text-red-600 text-sm mt-1 text-start">{formik.errors.email}</p>
+        )}
+      </div>
+      <div className="flex justify-end gap-2 items-center mt-4">
+        <Button type="button" variant="outline" onClick={() => navigate('/')}>
+          Back
+        </Button>
+        <Button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? 'Saving...' : 'Save'}
+        </Button>
+      </div>
+    </form>
+  );
+};

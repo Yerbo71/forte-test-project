@@ -1,0 +1,10 @@
+import axios from 'axios';
+import { CONTACTS_URL } from '@/api/url';
+import { IActionResponse, IContactIdParams } from '@/api/types';
+
+export const getContactsById = async ({
+  id
+}: IContactIdParams): Promise<IActionResponse> => {
+  const res = await axios.get<IActionResponse>(`${CONTACTS_URL}/${id}`);
+  return res.data;
+};
