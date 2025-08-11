@@ -26,6 +26,9 @@ Thumbs.db
 docker-data/
 *.pid
 
+# Temporary/backup files
+*~
+
 # Coverage / Testing
 coverage/
 *.lcov
