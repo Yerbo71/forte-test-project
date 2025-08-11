@@ -79,8 +79,9 @@ npm run dev
 **Стек:** React + Vite, Express.js, Docker.
 
 ##ScreenShots
-1. **Main Page**
+
+1. Main Page
 <img width="1465" height="803" alt="image" src="https://github.com/user-attachments/assets/440cc596-bbf2-4ee9-9c79-e20ea97fd84b" />
 
-2. **Form Page**
+2. Form Page
 <img width="973" height="404" alt="image" src="https://github.com/user-attachments/assets/435c49c6-ae6a-4937-8a41-87a2f5942146" />
