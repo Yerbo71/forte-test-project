@@ -1,9 +1,0 @@
-import { IContact, IResponseData } from '@/api/types';
-
-export interface IDeleteContactParams {
-  id: number;
-}
-
-export interface IGetContactsByIdResponse extends IResponseData {
-  data: IContact;
-}
